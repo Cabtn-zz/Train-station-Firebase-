@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+
+	<title>Train Time</title>
+		    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <!-- Bootstrap CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron">
+			<h1 class="text-center">Anytime is Train Time</h1>
+				<h3 class="text-center">Choo Choo Mother Fucker</h3>
+		</div>
+		<br>
+		<div class="row">
+			<div class="panel panel-default">
+  				<div class="panel-heading">
+    				<h3 class="panel-title">Train Information</h3>
+  				</div>
+   				 	 <!-- Table -->
+  					<table class="table">
+  						<thread>
+    						<tr>
+    							<th>Train Name</th>
+    							<th>Destination</th>
+    							<th>Frequency(min)</th>
+    							<th>Next Arrival</th>
+    							<th>Minutes away</th>
+    						</tr>
+    					</thread>
+    					<tbody class="appendHere">
+    						<tr>
+    							<th scope="row">Bifrost</th>
+    							<td>Valhalla</td>
+    							<td>100 Years</td>
+    							<td> 11:20PM minutes</td>
+    							<td> 20 minutes</td>
+    						</tr>
+    					</tbody>
+  					</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+    				<h3 class="panel-title">Add A Train</h3>
+    			</div>
+					<form>
+					  <div class="form-group">
+					    <label>Train Name</label>
+					    <input type="text" class="form-control" id="trainInput" placeholder="Choo Choo">
+					  </div>
+					  <div class="form-group">
+					    <label>Destination</label>
+					    <input type="text" class="form-control" id="destinationInput" placeholder="Hogwarts">
+					  </div>
+					  <div class="form-group">
+					    <label>Frequency</label>
+					    <input type="text" class="form-control" id="frequencyInput" placeholder="15 Min">
+					  </div>
+					  <div class="form-group">
+					    <label>First Train Time</label>
+					    <input type="text" class="form-control" id="timeInput" placeholder="2:00PM">
+					  </div>
+					   <div class="form-group">
+					    <label>Minutes Away</label>
+					    <input type="text" class="form-control" id="minutesInput" placeholder="20 Min">
+					  </div>
+					   <button  class="btn btn-default" id="submit">Submit</button>
+					</form>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="train.js"></script>
+</html>
