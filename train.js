@@ -11,16 +11,15 @@
   var database = firebase.database();
   var listCount = 0;
 
- //  database.ref().on("value", function(snapshot){
-	// if (snapshot.val().trains) {
-	// 	trainArray = snapshot.val().trains;
-	// 	var allTrains = snapshot.val().trains;
-	// }  	
-	// else {
-	// 	trainArray.push(newTrain);
-	// }
- //  })
-
+  database.ref().on("value", function(snapshot){
+	if (snapshot.val()) {
+		trainArray = snapshot.val().trains;
+		var allTrains = snapshot.val().trains;
+	}  	
+	else {
+		trainArray = [];
+  }
+});
   $("#submit").on("click", function(){
   	event.preventDefault();
   	console.log("button works")
@@ -37,6 +36,10 @@
   	addToList();
   });
 
+   database.ref().set({
+        trains: trainArray,
+      });
+//update this code to not include the <td> it is cleaner that way
   function addToList() {
   	for (var i = 0; i < trainArray.length; i++){
   		$(newTable).empty();
