@@ -11,14 +11,17 @@
   var database = firebase.database();
   var listCount = 0;
 
-  database.ref().on("value", function(snapshot){
-	if (snapshot.val()) {
-		trainArray = snapshot.val().trains;
-		var allTrains = snapshot.val().trains;
-	}  	
-	else {
-		trainArray = [];
-  }
+  database.ref().on("child_added", function(snapshot){
+  	console.log('value changed'); 
+  	console.log(snapshot.val());
+  	// if (snapshot.val()) {
+      var newTable = $("<tr>");
+      $(newTable).append($('<td>').text(snapshot.val().name));
+      $(newTable).append($('<td>').text(snapshot.val().destination));
+      $(newTable).append($('<td>').text(snapshot.val().frequency));
+      $(newTable).append($('<td>').text(snapshot.val().time));
+      $(newTable).append($('<td>').text(snapshot.val().minutesAway));
+      $(".appendHere").append(newTable);
 });
   $("#submit").on("click", function(){
   	event.preventDefault();
@@ -29,26 +32,38 @@
   		frequency: $("#frequencyInput").val(),
   		time: $("#timeInput").val(),
   		minutesAway: $("#minutesInput").val(),
-  	}
-  	console.log(newTrain);
-  	trainArray.push(newTrain);
-  	console.log(trainArray);
-  	addToList();
+    }
+    console.log(newTrain);
+    trainArray.push(newTrain);
+    console.log(trainArray);
+    // addToList();
+
+      database.ref().push({
+        name: newTrain.name,
+        destination: newTrain.destination,
+        frequency: newTrain.frequency,
+        time: newTrain.time,
+        minutesAway: newTrain.minutesAway
+      });
   });
 
-   database.ref().set({
-        trains: trainArray,
-      });
 //update this code to not include the <td> it is cleaner that way
-  function addToList() {
-  	for (var i = 0; i < trainArray.length; i++){
-  		$(newTable).empty();
-  		var newTable = $("<tr>");
-  		$(newTable).append("<td>" + trainArray[i].name + "</td>");
-  		$(newTable).append("<td>" + trainArray[i].destination + "</td>");
-  		$(newTable).append("<td>" + trainArray[i].frequency + "</td>");
-  		$(newTable).append("<td>" + trainArray[i].time + "</td>");
-  		$(newTable).append("<td>" + trainArray[i].minutesAway + "</td>");
-  		$(".appendHere").append(newTable);
-  	}
-  }
+//create train element (create the tags)
+//create a train table (takes an array and spits out the tags)
+//refresh train table ()
+//each functions takes in 1 input and spits out an output, 1:1 input/output
+  // function addToList() {
+  // 	for (var i = 0; i < trainArray.length; i++){
+  // 		$(newTable).empty();
+  // 		var newTable = $("<tr>");
+  // 		$(newTable).append(	$('<td>').text(trainArray[i].name));
+  // 		$(newTable).append("<td>" + trainArray[i].destination + "</td>");
+  // 		$(newTable).append("<td>" + trainArray[i].frequency + "</td>");
+  // 		$(newTable).append("<td>" + trainArray[i].time + "</td>");
+  // 		$(newTable).append("<td>" + trainArray[i].minutesAway + "</td>");
+  // 		$(".appendHere").append(newTable);
+  // 	}
+  // }
+  //make addToList take in an object to make it smoother
+  //instead of database set use database push, this will push automically
+  //instead of on value use on database child added
