@@ -10,40 +10,55 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+var inputTime;
+var inputFrequency; 
+var nextArrival
+var tMinutesTillTrain;
+
+
 database.ref().on("child_added", function(snapshot){
   var newTable = $("<tr>");
   $(newTable).append($('<td>').text(snapshot.val().name));
   $(newTable).append($('<td>').text(snapshot.val().destination));
   $(newTable).append($('<td>').text(snapshot.val().frequency));
   $(newTable).append($('<td>').text(snapshot.val().time));
-  $(newTable).append($('<td>').text(snapshot.val().minutesAway));
+  $(newTable).append($('<td>').text(snapshot.val().minutesAway + " minute"));
   $(".appendHere").append(newTable);
 });
 
 $("#submit").on("click", function(){
 	event.preventDefault();
+  timeConverter();
 	var newTrain = {
 		name: $("#trainInput").val(),
 		destination: $("#destinationInput").val(),
 		frequency: $("#frequencyInput").val(),
-		time: $("#timeInput").val(),
-		minutesAway: $("#minutesInput").val(),
+		time: nextArrival,
+		minutesAway: tMinutesTillTrain,
   }
   database.ref().push({
     name: newTrain.name,
     destination: newTrain.destination,
     frequency: newTrain.frequency,
     time: newTrain.time,
-    minutesAway: newTrain.minutesAway
+    minutesAway: newTrain.minutesAway,
   });
+  
 });
 
-//update this code to not include the <td> it is cleaner that way
-//create train element (create the tags)
-//create a train table (takes an array and spits out the tags)
-//refresh train table ()
-//each functions takes in 1 input and spits out an output, 1:1 input/output
-
-  //make addToList take in an object to make it smoother
-  //instead of database set use database push, this will push automically
-  //instead of on value use on database child added
+function timeConverter(){
+    inputTime = $("#timeInput").val(); 
+    inputFrequency = $("#frequencyInput").val();
+    var firstTimeConverted = moment(inputTime, "hh:mm").subtract(1, "years");
+    // Current Time
+    var currentTime = moment();
+    // Difference between the times
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    // Time apart (remainder)
+    var tRemainder = diffTime % inputFrequency;
+    // Minute Until Train
+    tMinutesTillTrain = inputFrequency - tRemainder;
+    // Next Train
+    nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    nextArrival = moment(nextTrain).format("hh:mm a");
+};
