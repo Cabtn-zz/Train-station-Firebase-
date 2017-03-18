@@ -20,9 +20,9 @@ database.ref().on("child_added", function(snapshot){
   var newTable = $("<tr>");
   $(newTable).append($('<td>').text(snapshot.val().name));
   $(newTable).append($('<td>').text(snapshot.val().destination));
-  $(newTable).append($('<td>').text(snapshot.val().frequency));
+  $(newTable).append($('<td>').text(snapshot.val().frequency + " minutes"));
   $(newTable).append($('<td>').text(snapshot.val().time));
-  $(newTable).append($('<td>').text(snapshot.val().minutesAway + " minute"));
+  $(newTable).append($('<td>').text(snapshot.val().minutesAway + " minutes"));
   $(".appendHere").append(newTable);
 });
 
@@ -60,5 +60,5 @@ function timeConverter(){
     tMinutesTillTrain = inputFrequency - tRemainder;
     // Next Train
     nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    nextArrival = moment(nextTrain).format("hh:mm a");
+    nextArrival = moment(nextTrain).format("hh:mm A");
 };
